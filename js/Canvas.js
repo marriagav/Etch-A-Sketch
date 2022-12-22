@@ -1,7 +1,9 @@
 class Canvas {
-  constructor(document, dimention = 16) {
-    this.height = dimention;
-    this.width = dimention;
+  constructor(document, minDimention = 1, maxDimention = 64, dimention = 16) {
+    this.document = document;
+    this.minDimention = minDimention;
+    this.maxDimention = maxDimention;
+    this.dimention = dimention;
     this.canvas = document.querySelector(".drawing-board");
     this.mouseDown = this.bodyMouseListener();
     this.currentColors = ["#000000"];
@@ -18,7 +20,8 @@ class Canvas {
   }
 
   buildCanvas() {
-    for (let i = 0; i < this.height; i++) {
+    const height = this.dimention;
+    for (let i = 0; i < height; i++) {
       const row = document.createElement("div");
       row.classList.add("grid-row");
       this.buildRow(row);
@@ -27,7 +30,8 @@ class Canvas {
   }
 
   buildRow(row) {
-    for (let i = 0; i < this.width; i++) {
+    const width = this.dimention;
+    for (let i = 0; i < width; i++) {
       const cell = document.createElement("div");
       cell.classList.add("grid-cell");
       this.addCellEvents(cell);
@@ -64,6 +68,21 @@ class Canvas {
     cells.forEach((cell) => {
       cell.style.backgroundColor = "white";
     });
+  }
+
+  resizeCanvas(size) {
+    const cells = (this.canvas = document.querySelectorAll(".grid-cell"));
+    cells.forEach((cell) => {
+      cell.remove();
+    });
+    const rows = (this.canvas = document.querySelectorAll(".grid-row"));
+    rows.forEach((row) => {
+      console.log(row);
+      row.remove();
+    });
+    this.dimention = size;
+    this.canvas = document.querySelector(".drawing-board");
+    this.buildCanvas();
   }
 }
 

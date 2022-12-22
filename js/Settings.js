@@ -1,3 +1,5 @@
+import Canvas from "./Canvas.js";
+
 const randomColors = [];
 
 for (let _ = 0; _ < 50; _++) {
@@ -40,11 +42,29 @@ class Settings {
       button.addEventListener("click", this.changeMode);
       this.buttonList.appendChild(button);
     });
+    //Clear buttom
     const button = document.createElement("button");
     button.textContent = "Clear";
     button.self = this;
     button.addEventListener("click", this.clear);
     this.buttonList.appendChild(button);
+    //Slider
+    const sliderContainer = document.createElement("div");
+    sliderContainer.classList.add("slidecontainer");
+    this.slider = document.createElement("input");
+    this.slider.type = "range";
+    this.slider.classList.add("slider");
+    this.slider.min = this.canvas.minDimention;
+    this.slider.max = this.canvas.maxDimention;
+    this.slider.value = this.canvas.dimention;
+    this.slider.self = this;
+    this.slider.addEventListener("input", this.changeCanvasSize);
+    this.sliderText = document.createElement("p");
+    this.sliderText.id = "sliderText";
+    this.sliderText.textContent = `${this.slider.value} x ${this.slider.value}`;
+    sliderContainer.appendChild(this.sliderText);
+    sliderContainer.appendChild(this.slider);
+    this.buttonList.appendChild(sliderContainer);
   }
 
   changeMode(e) {
@@ -56,6 +76,19 @@ class Settings {
 
   clear(e) {
     this.self.canvas.clear();
+  }
+
+  changeCanvasSize(e) {
+    this.self.sliderText.textContent = `${this.value} x ${this.value}`;
+    this.self.canvas.resizeCanvas(this.value);
+    // const canv = this.self.canvas;
+    // this.self.canvas.destroyCanvas();
+    // this.self.canvas = new Canvas(
+    //   canv.document,
+    //   canv.minDimention,
+    //   canv.maxDimention,
+    //   this.value
+    // );
   }
 }
 
