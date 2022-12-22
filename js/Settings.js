@@ -81,14 +81,6 @@ class Settings {
   changeCanvasSize(e) {
     this.self.sliderText.textContent = `${this.value} x ${this.value}`;
     this.self.canvas.resizeCanvas(this.value);
-    // const canv = this.self.canvas;
-    // this.self.canvas.destroyCanvas();
-    // this.self.canvas = new Canvas(
-    //   canv.document,
-    //   canv.minDimention,
-    //   canv.maxDimention,
-    //   this.value
-    // );
   }
 }
 
